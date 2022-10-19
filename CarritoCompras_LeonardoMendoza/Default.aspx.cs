@@ -9,14 +9,24 @@ using Negocio;
 
 namespace CarritoCompras_LeonardoMendoza
 {
-    public partial class _Default : Page
+    public partial class _Default : System.Web.UI.Page
     {
+        public List<Articulo> ListaArticulos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            dgvArticulos.DataSource = negocio.listar();
-            dgvArticulos.DataBind();   
+         
+            ListaArticulos = negocio.listar();
 
+            repRepetidor.DataSource = ListaArticulos;
+            repRepetidor.DataBind();
+
+
+        }
+
+        protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }
