@@ -61,6 +61,23 @@ namespace Negocio
 
         }
 
+       public object buscarArt (int ID )
+        {
+            Articulo art = new Articulo();
+            ArticuloNegocio ArtNegocio = new ArticuloNegocio();
+            List<Articulo> lista = ArtNegocio.listar();
+
+           foreach ( var item in lista)
+            {
+                if (item.Id == ID)
+
+                { return item; }
+               
+            }
+            return art;
+           
+        }
+       
         public void agregar(Articulo nuevo)
         {
 

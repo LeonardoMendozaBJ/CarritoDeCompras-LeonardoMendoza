@@ -18,15 +18,60 @@ namespace CarritoCompras_LeonardoMendoza
          
             ListaArticulos = negocio.listar();
 
-            repRepetidor.DataSource = ListaArticulos;
-            repRepetidor.DataBind();
+            if (!IsPostBack)
+            {
+                repRepetidor.DataSource = ListaArticulos;
+                repRepetidor.DataBind();
 
-
+            }
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+   
+
+
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+            ArtCarrito nuevo = new ArtCarrito();
+            int Id = int.Parse(((Button)sender).CommandArgument);
+
+            Articulo art = new Articulo();
+            ArticuloNegocio ArtNegocio = new ArticuloNegocio();
+            List<Articulo> lista = ArtNegocio.listar();
+
+            foreach (var item in lista)
+            {
+                if (item.Id == Id)
+                {
+                    nuevo.Id = item.Id;
+                    nuevo.Codigo = item.Codigo;
+                    nuevo.Nombre = item.Nombre;
+                    nuevo.Precio = item.Precio;
+                }
+            }
+            /*List<ArtCarrito> ListaCarrito = (List<ArtCarrito>)Session["ListaCarrito"]; */
+            List<ArtCarrito> ListaCarrito = ListaSessionCarrito();
+                ListaCarrito.Add(nuevo);
+                Response.Redirect("CarritoCompra.aspx");
+            
+
+
+        }
+        private List<ArtCarrito> ListaSessionCarrito()
+        {
+            List<ArtCarrito> artCarritos = Session["ListaCarrito"] != null ?
+              (List<ArtCarrito>)Session["ListaCarrito"] : new List<ArtCarrito>();
+            return artCarritos;
+        }
+       
+        protected void btnVerDetalle_Click(object sender, EventArgs e)
+        {
+            int Id = int.Parse(((Button)sender).CommandArgument);
+            Response.Redirect("Detalle.aspx?Id=" + Id);
         }
     }
 }
