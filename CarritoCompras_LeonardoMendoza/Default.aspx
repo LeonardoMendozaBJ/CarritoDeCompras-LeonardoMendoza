@@ -9,7 +9,9 @@
 
     </style>
    --%>
-
+    <h1> -- LISTADO DE PRODUCTOS --  </h1>
+    <hr />  
+    <asp:Button ID = "lblContador" Text="Contador"  runat="server" class = "shadow-lg list-group-item-danger h5"   />
 <div class="row row-cols-1 row-cols-md-3 g-4 offcanvas-header">
     
     <asp:Repeater runat="server" ID ="repRepetidor">

@@ -24,6 +24,24 @@ namespace CarritoCompras_LeonardoMendoza
                 repRepetidor.DataBind();
 
             }
+
+
+            int contador = 0;
+            if (Session["ListaCarrito"] == null)
+            {
+                ArtCarritoNegocio negocioCarrito = new ArtCarritoNegocio();
+                Session.Add("ListaCarrito", negocioCarrito.listar());
+                lblContador.Text = "UNIDADES EN CARRITO DE COMPRAS: " + contador.ToString();
+
+            }
+            List<ArtCarrito> listaSession = new List<ArtCarrito>();
+            listaSession = (List<ArtCarrito>)Session["ListaCarrito"];
+            foreach (var item in listaSession)
+            {
+
+                contador++;
+            }
+            lblContador.Text = "UNIDADES EN CARRITO DE COMPRAS: " + contador.ToString();
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,5 +91,7 @@ namespace CarritoCompras_LeonardoMendoza
             int Id = int.Parse(((Button)sender).CommandArgument);
             Response.Redirect("Detalle.aspx?Id=" + Id);
         }
+
+     
     }
 }

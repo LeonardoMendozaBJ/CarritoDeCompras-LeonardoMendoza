@@ -13,16 +13,29 @@ namespace CarritoCompras_LeonardoMendoza
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            int contador = 0;
             if (Session["ListaCarrito"] == null)
             {
                 ArtCarritoNegocio negocio = new ArtCarritoNegocio();
                 Session.Add("ListaCarrito", negocio.listar());
+                lblContador.Text = "UNIDADES EN CARRITO DE COMPRAS: " + contador.ToString();
             }
 
 
             dgvArticulos.DataSource = Session["ListaCarrito"];
             dgvArticulos.DataBind();
 
+            List<ArtCarrito> listaSession = new List<ArtCarrito>();
+            listaSession = (List<ArtCarrito>)Session["ListaCarrito"];
+            decimal total = 0;
+            
+            foreach (var item in listaSession)
+            {
+                    total += item.Precio;
+                contador++;
+            }
+            lblPrecio.Text = "TOTAL: $" + total;
+            lblContador.Text = "UNIDADES EN CARRITO DE COMPRAS: " + contador.ToString();
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
@@ -39,6 +52,15 @@ namespace CarritoCompras_LeonardoMendoza
 
             dgvArticulos.DataSource = Session["ListaCarrito"];
             dgvArticulos.DataBind();
+            decimal total = 0;
+            int contador = 0;
+            foreach (var item in listaSession)
+            {
+                total += item.Precio;
+                contador++;
+            }
+            lblPrecio.Text = "TOTAL: $" + total;
+           
         }
     }
 }

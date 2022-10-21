@@ -46,10 +46,10 @@
     <a class="navbar-brand" href="Default">Listado de Articulos</a>
       <a class="navbar-brand" href="CarritoCompra">Carrito de Compras</a>
       
-  </div>
+      </div>
+
 </nav>
-
-
+        
         <div class="container body-content card-footer table-danger lead">
             <hr />
             <asp:ContentPlaceHolder ID="MainContent" runat="server">

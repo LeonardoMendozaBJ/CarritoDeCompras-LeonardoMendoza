@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
      <h1> -- Detalle De Articulo -- </h1>
-     
+    <hr /> 
         <div>
         <asp:Image ImageUrl="imageurl" runat="server" ID ="ImagenURL" />
         </div>
@@ -27,7 +27,7 @@
         <div>
         <asp:Label Text="Precio" runat="server" ID="lblPrecio"/>
 
-
+            <hr />  
     </div>
 
 </asp:Content>
