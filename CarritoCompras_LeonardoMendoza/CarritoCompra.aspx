@@ -4,7 +4,7 @@
     <h1>  CARRITO DE COMPRAS  </h1>
     <hr />
     
-    <asp:Button ID = "lblContador" Text="Contador"  runat="server" class = "shadow-lg list-group-item-danger h5"   />
+    
     <div>  
      <asp:GridView runat="server" ID="dgvArticulos" OnSelectedIndexChanged ="dgvArticulos_SelectedIndexChanged"  DataKeyNames="Id"  CssClass="table-striped alert-warning table" AutoGenerateColumns ="FALSE">
       <columns>

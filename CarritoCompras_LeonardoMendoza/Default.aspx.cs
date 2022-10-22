@@ -15,15 +15,35 @@ namespace CarritoCompras_LeonardoMendoza
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-         
-            ListaArticulos = negocio.listar();
+
+            if (Session["filtro"] != null)
+            {
+                string campo = Session["campo"].ToString();
+                string criterio = Session["criterio"].ToString();
+                string filtro = Session["filtro"].ToString();
+
+                ListaArticulos = negocio.filtrar(campo, criterio, filtro);
+
+            }
+            else { ListaArticulos = negocio.listar(); }
+
 
             if (!IsPostBack)
             {
                 repRepetidor.DataSource = ListaArticulos;
                 repRepetidor.DataBind();
+                ddlCampo.Items.Add("Precio");
+                ddlCampo.Items.Add("Nombre");
+                ddlCampo.Items.Add("Descripcion");
+                ddlCampo.Items.Add("Marca");
+                ddlCampo.Items.Add("Categoria");
+                ddlCriterio.Items.Add("Precio Mayor a");
+                ddlCriterio.Items.Add("Precio Menor a");
+                ddlCriterio.Items.Add("Comienza con");
+                ddlCriterio.Items.Add("Termina con");
 
             }
+
 
 
             int contador = 0;
@@ -42,14 +62,17 @@ namespace CarritoCompras_LeonardoMendoza
                 contador++;
             }
             lblContador.Text = "UNIDADES EN CARRITO DE COMPRAS: " + contador.ToString();
+
+  
+
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
         }
 
-   
+
 
 
         protected void btnAgregarCarrito_Click(object sender, EventArgs e)
@@ -73,9 +96,10 @@ namespace CarritoCompras_LeonardoMendoza
             }
             /*List<ArtCarrito> ListaCarrito = (List<ArtCarrito>)Session["ListaCarrito"]; */
             List<ArtCarrito> ListaCarrito = ListaSessionCarrito();
-                ListaCarrito.Add(nuevo);
-                Response.Redirect("CarritoCompra.aspx");
+            ListaCarrito.Add(nuevo);
+           Response.Redirect("Default.aspx");
             
+
 
 
         }
@@ -85,13 +109,32 @@ namespace CarritoCompras_LeonardoMendoza
               (List<ArtCarrito>)Session["ListaCarrito"] : new List<ArtCarrito>();
             return artCarritos;
         }
-       
+
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {
             int Id = int.Parse(((Button)sender).CommandArgument);
             Response.Redirect("Detalle.aspx?Id=" + Id);
         }
 
-     
+        protected void btnFiltro_Click(object sender, EventArgs e)
+        {
+
+            if (txtFiltro.Text != null)
+            {
+                string filtro = txtFiltro.Text;
+                string campo = ddlCampo.SelectedValue.ToString();
+                string criterio = ddlCriterio.SelectedValue.ToString();
+                Session.Add("filtro", filtro);
+                Session.Add("campo", campo);
+                Session.Add("criterio", criterio);
+            }
+
+            /*Response.Redirect("Default.aspx", false);*/
+        }
+
+        protected void lblContador_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CarritoCompra.aspx");
+        }
     }
 }
